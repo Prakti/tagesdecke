@@ -4,8 +4,15 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-blanket');
+  grunt.loadNpmTasks('grunt-eslint');
 
   grunt.initConfig({
+    eslint: {
+      options: {
+        config: 'eslint.json'
+      },
+      target: ['lib/*.js']
+    },
     clean: {
       coverage: {
         src: ['coverage/']
@@ -47,5 +54,5 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('default', ['clean', 'blanket', 'copy', 'mochaTest']);
+  grunt.registerTask('default', ['eslint', 'clean', 'blanket', 'copy', 'mochaTest']);
 };

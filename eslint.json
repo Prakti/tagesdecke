@@ -1,0 +1,13 @@
+{
+  "rules": {
+    "func-names": 2,
+    "brace-style": 2,
+    "space-infix-ops": 2,
+    "new-cap": 2,
+    "consistent-this": [2, "self"],
+    "camelcase": 0,
+    "max-nested-callbacks": [2, 3],
+    "no-underscore-dangle": 0,
+    "quotes": [2, "single", "avoid-escape"]
+  }
+}
