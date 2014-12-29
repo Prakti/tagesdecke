@@ -47,7 +47,7 @@ describe('Connection', function () {
   });
 
   describe('#get("http://localhost:5984/")', function () {
-    it('should return a CouchResponse with information about the CouchDB instance', function(done) {
+    it('should return a CouchResponse with information about the CouchDB instance', function (done) {
       //Fake an answer from CouchDB and return it.
       setupMock('GET', 'http://localhost:5984/', null, null, 200, { 'couchdb' : 'Welcome' });
 
@@ -71,11 +71,7 @@ describe('Connection', function () {
 
   describe('#get("http://localhost:5984/some-nonexistent-db")', function () {
     it('should result in an 404 Error', function (done) {
-      // fake an error-response
-      var error = new Error();
-      error.statusCode = 404;
-
-      setupMock('GET', 'http://localhost:5984/some-nonexistent-db', null, error);
+      setupMock('GET', 'http://localhost:5984/some-nonexistent-db', null, null, 404, { ok: false});
 
       conn.get('/some-nonexistent-db').catch(function (error) {
         expect(error).to.exist;
