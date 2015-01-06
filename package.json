@@ -4,13 +4,18 @@
   "description": "A thin access library for CouchDB",
   "main": "index.js",
   "scripts": {
-    "test": "grunt "
+    "test": "./node_modules/grunt-cli/bin/grunt"
   },
   "keywords": [
     "couchdb"
   ],
   "author": "Marcus Autenrieth",
-  "license": "BSD",
+  "license": "BSD 3-clause",
+  "config": {
+    "travis-cov": {
+      "threshold": 80
+    }
+  },
   "dependencies": {
     "bluebird": "^2.3.11",
     "lodash": "^2.4.1",
@@ -24,6 +29,7 @@
     "chai-as-promised": "^4.1.1",
     "grunt": "^0.4.5",
     "grunt-blanket": "0.0.8",
+    "grunt-cli": "^0.1.13",
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-copy": "^0.7.0",
     "grunt-eslint": "^2.1.0",

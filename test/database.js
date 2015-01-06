@@ -1,4 +1,6 @@
-/* eslint-env mocha */
+/* eslint-env mocha, node */
+/* eslint max-nested-callbacks: [2, 5] */
+/* eslint no-unused-expressions: 0 */
 'use strict';
 
 var chai = require('chai');
@@ -24,7 +26,7 @@ describe('Database', function () {
   var db = new Database(TEST_DB_NAME, conn);
 
   // TODO: We need to check wether the url is contructed correctly
-  // TOTO: We need to check if the data is correctly passed back
+  // TODO: We need to check if the data is correctly passed back
 
   // Renew the connection with the request stub for each sub-test
   beforeEach(function () {
@@ -36,7 +38,7 @@ describe('Database', function () {
 
   function setupMock(exp, method, path, opts, error, statusCode, body) {
     mock.expects(exp).atLeast(1).withArgs(method, path, opts).returns(
-        new Promise(function do_request (reject, resolve) {
+        new Promise(function do_request (resolve, reject) {
           if (error) {
             return reject(error);
           }
@@ -54,20 +56,24 @@ describe('Database', function () {
     it('should correctly pass through data from the connection', function (done) {
       var METH = 'POST';
       var SUBPATH = 'subpath';
-      var FULLPATH = TEST_DB_NAME + "/" + SUBPATH;
+      var FULLPATH = TEST_DB_NAME + '/' + SUBPATH;
       var OPTS = 'OPTIONS';
       var BODY = { ok: true };
+      var STATUS = 201;
 
-      setupMock('make_request', METH, FULLPATH, OPTS, null, 201, BODY);
+      setupMock('make_request', METH, FULLPATH, OPTS, null, STATUS, BODY);
 
       db.make_request(METH, SUBPATH, OPTS).then(function (result) {
-        console.log("Result: ", result);
         mock.verify();
-        // TODO: Check result with chai for correctness
+        expect(result).to.exist;
+        expect(result.response).to.exist;
+        expect(result.response.statusCode).to.equal(STATUS);
+        expect(result.body).to.exist;
+        expect(result.data).to.deep.equal(BODY);
         done();
       }).catch(function (err) {
-        console.log("Error: ", err);
-          done();
+        console.log('Error: ', err);
+        throw err;
       }).done();
     });
   });

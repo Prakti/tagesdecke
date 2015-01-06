@@ -11,7 +11,7 @@ module.exports = function(grunt) {
       options: {
         config: 'eslint.json'
       },
-      target: ['lib/*.js']
+      target: ['lib/*.js', 'test/*.js']
     },
     clean: {
       coverage: {

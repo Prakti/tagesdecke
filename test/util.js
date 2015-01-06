@@ -1,5 +1,7 @@
-/* eslint-env mocha */
-"use strict";
+/* eslint-env mocha, node */
+/* eslint max-nested-callbacks: [2, 5] */
+/* eslint no-unused-expressions: 0 */
+'use strict';
 
 var chai = require('chai');
 chai.use(require('chai-as-promised'));
@@ -12,7 +14,7 @@ var CouchResult = util.CouchResult;
 
 var TEST_DATA = {
   foo: 42,
-  bar: [1,2,3,4,5,6,7]
+  bar: [ 1, 2, 3, 4, 5, 6, 7 ]
 };
 
 // TODO: check how to incorporate commom error cases
