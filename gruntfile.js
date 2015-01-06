@@ -62,8 +62,8 @@ module.exports = function(grunt) {
       }
     },
     coveralls: {
-      options: {
-        src: 'coverage.lcov'
+      upload: {
+        src: './coverage.lcov',
       }
     }
   });
