@@ -8,6 +8,7 @@ chai.use(require('chai-as-promised'));
 var expect = chai.expect;
 
 var sinon = require('sinon');
+/*global Promise:true*/
 var Promise = require('bluebird');
 
 var Database = require('../lib/database');
