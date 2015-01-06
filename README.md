@@ -1,6 +1,7 @@
 # Tagesdecke - a thin CouchDB access library
 
-<img src="https://travis-ci.org/Prakti/tagesdecke.svg?branch=master" />
+[![Build Status](https://travis-ci.org/Prakti/tagesdecke.svg?branch=master)](https://travis-ci.org/Prakti/tagesdecke)
+[![Coverage Status](https://img.shields.io/coveralls/Prakti/tagesdecke.svg)](https://coveralls.io/r/Prakti/tagesdecke?branch=master)
 
 This library is meant to be a thin access driver for CouchDB, easing most of
 the low-level HTTP handling via convenience functions.
