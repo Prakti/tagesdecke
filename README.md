@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/Prakti/tagesdecke.svg?branch=master)](https://travis-ci.org/Prakti/tagesdecke)
 [![Coverage Status](https://img.shields.io/coveralls/Prakti/tagesdecke.svg)](https://coveralls.io/r/Prakti/tagesdecke?branch=master)
+[![Dependency Status](https://david-dm.org/prakti/tagesdecke.svg)](https://david-dm.org/prakti/tagesdecke)
+[![devDependency Status](https://david-dm.org/prakti/tagesdecke/dev-status.svg)](https://david-dm.org/prakti/tagesdecke#info=devDependencies)
 
 This library is meant to be a thin access driver for CouchDB, easing most of
 the low-level HTTP handling via convenience functions.
