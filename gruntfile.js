@@ -37,11 +37,19 @@ module.exports = function(grunt) {
         },
         src: ['coverage/test/**/*.js']
       },
-      coverage: {
+      'coverage-html': {
         options: {
           reporter: 'html-cov',
           quiet: true,
           captureFile: 'coverage.html'
+        },
+        src: ['coverage/test/**/*.js']
+      },
+      'coverage-lcov': {
+        options: {
+          reporter: 'mocha-lcov-reporter',
+          quiet: true,
+          captureFile: 'coverage.lcov'
         },
         src: ['coverage/test/**/*.js']
       },
@@ -51,8 +59,14 @@ module.exports = function(grunt) {
         },
         src: ['coverage/test/**/*.js']
       }
+    },
+    coveralls: {
+      options: {
+        src: 'coverage.lcov'
+      }
     }
   });
 
   grunt.registerTask('default', ['eslint', 'clean', 'blanket', 'copy', 'mochaTest']);
+  grunt.registerTask('travis', ['default', 'coveralls']);
 };
