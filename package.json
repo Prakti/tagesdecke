@@ -11,6 +11,10 @@
   ],
   "author": "Marcus Autenrieth",
   "license": "BSD 3-clause",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Prakti/tagesdecke.git"
+  },
   "config": {
     "travis-cov": {
       "threshold": 80
