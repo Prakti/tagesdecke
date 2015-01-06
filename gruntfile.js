@@ -3,6 +3,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-coveralls');
   grunt.loadNpmTasks('grunt-blanket');
   grunt.loadNpmTasks('grunt-eslint');
 
@@ -67,6 +68,5 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('default', ['eslint', 'clean', 'blanket', 'copy', 'mochaTest']);
-  grunt.registerTask('travis', ['default', 'coveralls']);
+  grunt.registerTask('default', ['eslint', 'clean', 'blanket', 'copy', 'mochaTest', 'coveralls']);
 };
