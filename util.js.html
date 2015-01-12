@@ -43,27 +43,6 @@
     </div>
     <ul class="list">
     
-        <li class="item" data-name="RequestOptions">
-            <span class="title">
-                <a href="RequestOptions.html">RequestOptions</a>
-                
-                <span class="static">static</span>
-                
-            </span>
-            <ul class="members itemMembers">
-            
-            </ul>
-            <ul class="typedefs itemMembers">
-            
-            </ul>
-            <ul class="methods itemMembers">
-            
-            </ul>
-            <ul class="events itemMembers">
-            
-            </ul>
-        </li>
-    
         <li class="item" data-name="Connection">
             <span class="title">
                 <a href="Connection.html">Connection</a>
@@ -85,7 +64,15 @@
             
             <span class="subtitle">Methods</span>
             
+                <li data-name="Connection#delete"><a href="Connection.html#delete">delete</a></li>
+            
+                <li data-name="Connection#get"><a href="Connection.html#get">get</a></li>
+            
                 <li data-name="Connection#make_request"><a href="Connection.html#make_request">make_request</a></li>
+            
+                <li data-name="Connection#post"><a href="Connection.html#post">post</a></li>
+            
+                <li data-name="Connection#put"><a href="Connection.html#put">put</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -99,6 +86,16 @@
                 
             </span>
             <ul class="members itemMembers">
+            
+            <span class="subtitle">Members</span>
+            
+                <li data-name="CouchError#body"><a href="CouchError.html#body">body</a></li>
+            
+                <li data-name="CouchError#data"><a href="CouchError.html#data">data</a></li>
+            
+                <li data-name="CouchError#response"><a href="CouchError.html#response">response</a></li>
+            
+                <li data-name="CouchError#statusCode"><a href="CouchError.html#statusCode">statusCode</a></li>
             
             </ul>
             <ul class="typedefs itemMembers">
@@ -119,6 +116,14 @@
             </span>
             <ul class="members itemMembers">
             
+            <span class="subtitle">Members</span>
+            
+                <li data-name="CouchResult#body"><a href="CouchResult.html#body">body</a></li>
+            
+                <li data-name="CouchResult#data"><a href="CouchResult.html#data">data</a></li>
+            
+                <li data-name="CouchResult#response"><a href="CouchResult.html#response">response</a></li>
+            
             </ul>
             <ul class="typedefs itemMembers">
             
@@ -138,6 +143,12 @@
             </span>
             <ul class="members itemMembers">
             
+            <span class="subtitle">Members</span>
+            
+                <li data-name="Database#conn"><a href="Database.html#conn">conn</a></li>
+            
+                <li data-name="Database#name"><a href="Database.html#name">name</a></li>
+            
             </ul>
             <ul class="typedefs itemMembers">
             
@@ -146,7 +157,15 @@
             
             <span class="subtitle">Methods</span>
             
+                <li data-name="Database#delete"><a href="Database.html#delete">delete</a></li>
+            
+                <li data-name="Database#get"><a href="Database.html#get">get</a></li>
+            
                 <li data-name="Database#make_request"><a href="Database.html#make_request">make_request</a></li>
+            
+                <li data-name="Database#post"><a href="Database.html#post">post</a></li>
+            
+                <li data-name="Database#put"><a href="Database.html#put">put</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -189,8 +208,11 @@
 var util = require('util');
 
 /**
- * Memozied property for retrieving the JSON decoded body of a CouchResult or
+ * Memozied accessor-function for JSON decoding the body of a CouchResult or
  * CouchError
+ *
+ * @private
+ * @function
  */
 function get_data () {
   if (this._data === undefined) {
@@ -202,13 +224,46 @@ function get_data () {
 
 
 /**
+ * Create a new CouchError from a given HTTP response and body.
+ *
  * @class
+ * @augments Error
+ * @classdesc
+ * Encapsulates a HTTP response from a CouchDB and provides quick access to
+ * the decoded response body and the status-code for inspection.
+ *
+ * @param {Object} response - The complete response object as returned from
+ *                            the 'request' library
+ * @param {String} body - The raw body of the HTTP response
  */
 function CouchError(response, body) {
+
+  /**
+   * The HTTP Status Code of the HTTP response for fast access and inspection
+   * @member {Int}
+   */
   this.statusCode = response.statusCode;
+
+  /**
+   * The raw response object as returned from 'request'
+   * @member {Object}
+   * @see {@link https://github.com/request/request|request}
+   */
   this.response = response;
+
+  /**
+   * The reaw body of the HTTP response
+   * @member {String}
+   */
   this.body = body;
 
+  /**
+   * The JSON decoded body of the HTTP response
+   * @member {Object|Array}
+   * @name data
+   * @memberof CouchError
+   * @instance
+   */
   Object.defineProperty(this, 'data', {
     get: get_data
   });
@@ -217,12 +272,38 @@ function CouchError(response, body) {
 util.inherits(CouchError, Error);
 
 /**
+ * Create a new CouchResult from a given HTTP response and body
+ *
  * @class
+ * @classdesc
+ * Encapsulates a HTTP response from a CouchDB and provides quick access to
+ * the decoded response body.
+ *
+ * @param {Object} response - The complete response object as returned from
+ *                            the 'request' library
+ * @param {String} body - The raw body of the HTTP response
  */
 function CouchResult(response, body) {
+  /**
+   * The raw response object as returned from 'request'
+   * @member {Object}
+   * @see {@link https://github.com/request/request|request}
+   */
   this.response = response;
+
+  /**
+   * The reaw body of the HTTP response
+   * @member {String}
+   */
   this.body = body;
 
+  /**
+   * The JSON decoded body of the HTTP response
+   * @member {Object|Array}
+   * @name data
+   * @memberof CouchResult
+   * @instance
+   */
   Object.defineProperty(this, 'data', {
     get: get_data
   });
@@ -245,7 +326,7 @@ module.exports = {
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha13</a> on Mon Jan 12 2015 18:12:07 GMT+0100 (CET)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha13</a> on Mon Jan 12 2015 22:45:56 GMT+0100 (CET)
         </footer>
     </div>
 </div>

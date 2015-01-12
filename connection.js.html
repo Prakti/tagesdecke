@@ -43,27 +43,6 @@
     </div>
     <ul class="list">
     
-        <li class="item" data-name="RequestOptions">
-            <span class="title">
-                <a href="RequestOptions.html">RequestOptions</a>
-                
-                <span class="static">static</span>
-                
-            </span>
-            <ul class="members itemMembers">
-            
-            </ul>
-            <ul class="typedefs itemMembers">
-            
-            </ul>
-            <ul class="methods itemMembers">
-            
-            </ul>
-            <ul class="events itemMembers">
-            
-            </ul>
-        </li>
-    
         <li class="item" data-name="Connection">
             <span class="title">
                 <a href="Connection.html">Connection</a>
@@ -85,7 +64,15 @@
             
             <span class="subtitle">Methods</span>
             
+                <li data-name="Connection#delete"><a href="Connection.html#delete">delete</a></li>
+            
+                <li data-name="Connection#get"><a href="Connection.html#get">get</a></li>
+            
                 <li data-name="Connection#make_request"><a href="Connection.html#make_request">make_request</a></li>
+            
+                <li data-name="Connection#post"><a href="Connection.html#post">post</a></li>
+            
+                <li data-name="Connection#put"><a href="Connection.html#put">put</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -99,6 +86,16 @@
                 
             </span>
             <ul class="members itemMembers">
+            
+            <span class="subtitle">Members</span>
+            
+                <li data-name="CouchError#body"><a href="CouchError.html#body">body</a></li>
+            
+                <li data-name="CouchError#data"><a href="CouchError.html#data">data</a></li>
+            
+                <li data-name="CouchError#response"><a href="CouchError.html#response">response</a></li>
+            
+                <li data-name="CouchError#statusCode"><a href="CouchError.html#statusCode">statusCode</a></li>
             
             </ul>
             <ul class="typedefs itemMembers">
@@ -119,6 +116,14 @@
             </span>
             <ul class="members itemMembers">
             
+            <span class="subtitle">Members</span>
+            
+                <li data-name="CouchResult#body"><a href="CouchResult.html#body">body</a></li>
+            
+                <li data-name="CouchResult#data"><a href="CouchResult.html#data">data</a></li>
+            
+                <li data-name="CouchResult#response"><a href="CouchResult.html#response">response</a></li>
+            
             </ul>
             <ul class="typedefs itemMembers">
             
@@ -138,6 +143,12 @@
             </span>
             <ul class="members itemMembers">
             
+            <span class="subtitle">Members</span>
+            
+                <li data-name="Database#conn"><a href="Database.html#conn">conn</a></li>
+            
+                <li data-name="Database#name"><a href="Database.html#name">name</a></li>
+            
             </ul>
             <ul class="typedefs itemMembers">
             
@@ -146,7 +157,15 @@
             
             <span class="subtitle">Methods</span>
             
+                <li data-name="Database#delete"><a href="Database.html#delete">delete</a></li>
+            
+                <li data-name="Database#get"><a href="Database.html#get">get</a></li>
+            
                 <li data-name="Database#make_request"><a href="Database.html#make_request">make_request</a></li>
+            
+                <li data-name="Database#post"><a href="Database.html#post">post</a></li>
+            
+                <li data-name="Database#put"><a href="Database.html#put">put</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -188,9 +207,10 @@
 
 /*global Promise:true*/
 /**
- * Promise class as provided by the bluedbird library.
+ * Promise class as provided by the bluedbird library. If a Promise is
+ * resolved it will yield a {@link CouchResult} if it is rejected it yields a
+ * {@link CouchError}.
  *
- * @private
  * @class Promise
  * @see {@link https://github.com/petkaantonov/bluebird.git|bluebird}
  */
@@ -211,7 +231,6 @@ var CouchError = util.CouchError;
  * supported by CouchDB via convenience functions which provide the require
  * mechanisms for creating the proper HTTP requests.
  *
- *
  * @param {String} url - The base URL to the CouchDB Instance
  * @param {Object} request - An object supporting the 'request' interface
  */
@@ -220,13 +239,13 @@ function Connection(url, request) {
   /**
    * The url to the CouchDB instance
    * @member {String}
-   * */
+   */
   this.url = url;
 
   /**
    * An Object fulfilling the request API
    * @member {Object}
-   * @see request
+   * @see {@link https://github.com/request/request|request}
    */
   this.request = request;
 }
@@ -237,7 +256,13 @@ function Connection(url, request) {
  *
  * @param {String} method - The HTTP verb to be used in the request
  * @param {String} path - The relative path for the request
- * @param {RequestOptions} opts - An Object containing optional parameters for the request
+ * @param {Object} opts - An Object containing optional parameters for the request:
+ * @param {Object} opts.headers - Object containing key/value pairs of custom
+ *                                HTTP Headers
+ * @param {Object} opts.parms - Object containing key/value pairs of parameters to
+ *                              be appended to the URL must be JSON encodable
+ * @param {Object} opts.body - Object or Array to be JSON encoded and put into
+ *                             the request body
  *
  * @returns {Promise} A {@link Promise} object. If the promise resolves a
  * {@link CouchResult} is returned, if it rejects a {@link CouchError} is
@@ -257,16 +282,6 @@ Connection.prototype.make_request = function make_request(method, path, opts) {
     url: urljoin(this.url, path)
   };
 
-
-  /**
-   * @namespace RequestOptions
-   * @property {Object} headers - Object containing key/value pairs of custom
-   *                              HTTP Headers
-   * @property {Object} parms - Object containing key/value pairs of
-   *                            parameters to be appended to the URL
-   * @property {Object} body - Object or Array to be JSON encoded and put into
-   *                           the request body
-   */
   if (opts) {
     if (opts.headers) {
       _.assign(headers, opts.headers);
@@ -299,19 +314,66 @@ Connection.prototype.make_request = function make_request(method, path, opts) {
 
 };
 
-
+/**
+ * Convenience method to send a GET request to a CouchDB host.
+ *
+ * @param {String} path - the path to the desired object below the host-URL
+ * @param {Object} parms - Object containing key/vale pairs of parametrers to
+ *                         be appended to the URL must be JSON encodable
+ *
+ * @returns {Promise} A {@link Promise} object. If the promise resolves a
+ * {@link CouchResult} is returned, if it rejects a {@link CouchError} is
+ * returned.
+ */
 Connection.prototype.get = function get(path, parms) {
   return this.make_request('GET', path, { parms: parms });
 };
 
+/**
+ * Convenience method to send a POST request to a CouchDB host.
+ *
+ * @param {String} path - the path to the desired object below the host-URL
+ * @param {Object} body - Object or Array to be JSON encoded and put into
+ *                        the request body
+ * @param {Object} parms - Object containing key/vale pairs of parametrers to
+ *                         be appended to the URL must be JSON encodable
+ *
+ * @returns {Promise} A {@link Promise} object. If the promise resolves a
+ * {@link CouchResult} is returned, if it rejects a {@link CouchError} is
+ * returned.
+ */
 Connection.prototype.post = function post(path, body, parms) {
   return this.make_request('POST', path, { body: body, parms: parms });
 };
 
+/**
+ * Convenience method to send a PUT request to a CouchDB host.
+ *
+ * @param {String} path - the path to the desired object below the host-URL
+ * @param {Object} body - Object or Array to be JSON encoded and put into
+ *                        the request body
+ * @param {Object} parms - Object containing key/vale pairs of parametrers to
+ *                         be appended to the URL must be JSON encodable
+ *
+ * @returns {Promise} A {@link Promise} object. If the promise resolves a
+ * {@link CouchResult} is returned, if it rejects a {@link CouchError} is
+ * returned.
+ */
 Connection.prototype.put = function put(path, body, parms) {
   return this.make_request('PUT', path, { body: body, parms: parms });
 };
 
+/**
+ * Convenience method to send a DELETE request to a CouchDB host.
+ *
+ * @param {String} path - the path to the desired object below the host-URL
+ * @param {Object} parms - Object containing key/vale pairs of parametrers to
+ *                         be appended to the URL must be JSON encodable
+ *
+ * @returns {Promise} A {@link Promise} object. If the promise resolves a
+ * {@link CouchResult} is returned, if it rejects a {@link CouchError} is
+ * returned.
+ */
 Connection.prototype.delete = function _delete(path, parms) {
   return this.make_request('DELETE', path, { parms: parms });
 };
@@ -329,7 +391,7 @@ module.exports = Connection;
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha13</a> on Mon Jan 12 2015 18:12:07 GMT+0100 (CET)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha13</a> on Mon Jan 12 2015 22:45:56 GMT+0100 (CET)
         </footer>
     </div>
 </div>
