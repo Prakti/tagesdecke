@@ -6,6 +6,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-coveralls');
   grunt.loadNpmTasks('grunt-blanket');
   grunt.loadNpmTasks('grunt-eslint');
+  grunt.loadNpmTasks('grunt-jsdoc');
 
   grunt.initConfig({
     eslint: {
@@ -65,8 +66,20 @@ module.exports = function(grunt) {
       upload: {
         src: './coverage.lcov',
       }
+    },
+    jsdoc : {
+      dist : {
+        src: ['index.js', 'lib/*.js', 'README.md'],
+        options: {
+          destination: 'doc',
+          template : "node_modules/jaguarjs-jsdoc",
+          configure : "jsdoc.conf.json"
+        }
+      }
     }
   });
 
-  grunt.registerTask('default', ['eslint', 'clean', 'blanket', 'copy', 'mochaTest', 'coveralls']);
+  grunt.registerTask('test', ['eslint', 'clean', 'blanket', 'copy', 'mochaTest']);
+  grunt.registerTask('npm', ['test', 'coveralls']);
+  grunt.registerTask('default', ['test', 'jsdoc']);
 };

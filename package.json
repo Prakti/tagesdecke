@@ -4,7 +4,7 @@
   "description": "A thin access library for CouchDB",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/grunt-cli/bin/grunt"
+    "test": "./node_modules/grunt-cli/bin/grunt npm"
   },
   "keywords": [
     "couchdb"
@@ -38,7 +38,9 @@
     "grunt-contrib-copy": "^0.7.0",
     "grunt-coveralls": "^1.0.0",
     "grunt-eslint": "^3.0.0",
+    "grunt-jsdoc": "^0.6.2",
     "grunt-mocha-test": "^0.12.4",
+    "jaguarjs-jsdoc": "0.0.1",
     "mocha": "^2.0.1",
     "mocha-lcov-reporter": "0.0.1",
     "sinon": "^1.12.2",
