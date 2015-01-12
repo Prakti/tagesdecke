@@ -1,4 +1,6 @@
 .*.swp
+.*.swo
+.grunt
 coverage.html
 coverage.lcov
 coverage
