@@ -43,27 +43,6 @@
     </div>
     <ul class="list">
     
-        <li class="item" data-name="RequestOptions">
-            <span class="title">
-                <a href="RequestOptions.html">RequestOptions</a>
-                
-                <span class="static">static</span>
-                
-            </span>
-            <ul class="members itemMembers">
-            
-            </ul>
-            <ul class="typedefs itemMembers">
-            
-            </ul>
-            <ul class="methods itemMembers">
-            
-            </ul>
-            <ul class="events itemMembers">
-            
-            </ul>
-        </li>
-    
         <li class="item" data-name="Connection">
             <span class="title">
                 <a href="Connection.html">Connection</a>
@@ -85,7 +64,15 @@
             
             <span class="subtitle">Methods</span>
             
+                <li data-name="Connection#delete"><a href="Connection.html#delete">delete</a></li>
+            
+                <li data-name="Connection#get"><a href="Connection.html#get">get</a></li>
+            
                 <li data-name="Connection#make_request"><a href="Connection.html#make_request">make_request</a></li>
+            
+                <li data-name="Connection#post"><a href="Connection.html#post">post</a></li>
+            
+                <li data-name="Connection#put"><a href="Connection.html#put">put</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -99,6 +86,16 @@
                 
             </span>
             <ul class="members itemMembers">
+            
+            <span class="subtitle">Members</span>
+            
+                <li data-name="CouchError#body"><a href="CouchError.html#body">body</a></li>
+            
+                <li data-name="CouchError#data"><a href="CouchError.html#data">data</a></li>
+            
+                <li data-name="CouchError#response"><a href="CouchError.html#response">response</a></li>
+            
+                <li data-name="CouchError#statusCode"><a href="CouchError.html#statusCode">statusCode</a></li>
             
             </ul>
             <ul class="typedefs itemMembers">
@@ -119,6 +116,14 @@
             </span>
             <ul class="members itemMembers">
             
+            <span class="subtitle">Members</span>
+            
+                <li data-name="CouchResult#body"><a href="CouchResult.html#body">body</a></li>
+            
+                <li data-name="CouchResult#data"><a href="CouchResult.html#data">data</a></li>
+            
+                <li data-name="CouchResult#response"><a href="CouchResult.html#response">response</a></li>
+            
             </ul>
             <ul class="typedefs itemMembers">
             
@@ -138,6 +143,12 @@
             </span>
             <ul class="members itemMembers">
             
+            <span class="subtitle">Members</span>
+            
+                <li data-name="Database#conn"><a href="Database.html#conn">conn</a></li>
+            
+                <li data-name="Database#name"><a href="Database.html#name">name</a></li>
+            
             </ul>
             <ul class="typedefs itemMembers">
             
@@ -146,7 +157,15 @@
             
             <span class="subtitle">Methods</span>
             
+                <li data-name="Database#delete"><a href="Database.html#delete">delete</a></li>
+            
+                <li data-name="Database#get"><a href="Database.html#get">get</a></li>
+            
                 <li data-name="Database#make_request"><a href="Database.html#make_request">make_request</a></li>
+            
+                <li data-name="Database#post"><a href="Database.html#post">post</a></li>
+            
+                <li data-name="Database#put"><a href="Database.html#put">put</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -354,11 +373,407 @@ database-specific functionality of a CouchDB  Host for a given database.</p></di
     
     
     
+        <h3 class="subsection-title">Members</h3>
+        
+        <dl>
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="conn">conn<span class="type-signature type connection"><a href="Connection.html">Connection</a></span> </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>The Connection to the database's host.</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="name">name<span class="type-signature type string">String</span> </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>The name of the database to be accessed</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        </dl>
+    
     
     
         <h3 class="subsection-title">Methods</h3>
         
         <dl>
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="delete">
+            
+            delete<span class="signature">(path, parms)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="Promise.html">Promise</a>}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="database.js.html">database.js</a>, <a href="database.js.html#line110">line 110</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Convenience method to send a DELETE request to a CouchDB database.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>path</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>the path to the desired object below the database-URL</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>parms</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>Object containing key/vale pairs of parametrers to
+                        be appended to the URL must be JSON encodable</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+
+
+<h5>Returns:</h5>
+<a href="Promise.html"><code>Promise</code></a> object. If the promise resolves a
+<a href="CouchResult.html"><code>CouchResult</code></a> is returned, if it rejects a <a href="CouchError.html"><code>CouchError</code></a> is
+returned.
+<br />
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="get">
+            
+            get<span class="signature">(path, parms)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="Promise.html">Promise</a>}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="database.js.html">database.js</a>, <a href="database.js.html#line61">line 61</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Convenience method to send a GET request to a CouchDB database.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>path</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>the path to the desired object below the database-URL</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>parms</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>Object containing key/vale pairs of parametrers to
+                        be appended to the URL must be JSON encodable</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+
+
+<h5>Returns:</h5>
+<a href="Promise.html"><code>Promise</code></a> object. If the promise resolves a
+<a href="CouchResult.html"><code>CouchResult</code></a> is returned, if it rejects a <a href="CouchError.html"><code>CouchError</code></a> is
+returned.
+<br />
+
+    
+    
+    
+</dd>
+
+        
             
 <dt>
     <div class="nameContainer">
@@ -369,7 +784,7 @@ database-specific functionality of a CouchDB  Host for a given database.</p></di
     
         
         <div class="tag-source">
-            <a href="database.js.html">database.js</a>, <a href="database.js.html#line34">line 34</a>
+            <a href="database.js.html">database.js</a>, <a href="database.js.html#line44">line 44</a>
         </div>
         
     </div>
@@ -463,7 +878,7 @@ database-specific functionality of a CouchDB  Host for a given database.</p></di
             <td class="type">
             
                 
-<span class="param-type"><a href="RequestOptions.html">RequestOptions</a></span>
+<span class="param-type">RequestOptions</span>
 
 
             
@@ -474,6 +889,356 @@ database-specific functionality of a CouchDB  Host for a given database.</p></di
             <td class="description last">
                 
                 <p>An Object containing optional parameters for the request</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+
+
+<h5>Returns:</h5>
+<a href="Promise.html"><code>Promise</code></a> object. If the promise resolves a
+<a href="CouchResult.html"><code>CouchResult</code></a> is returned, if it rejects a <a href="CouchError.html"><code>CouchError</code></a> is
+returned.
+<br />
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="post">
+            
+            post<span class="signature">(path, body, parms)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="Promise.html">Promise</a>}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="database.js.html">database.js</a>, <a href="database.js.html#line78">line 78</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Convenience method to send a POST request to a CouchDB database.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>path</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>the path to the desired object below the database-URL</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>body</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>Object or Array to be JSON encoded and put into
+                       the request body</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>parms</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>Object containing key/vale pairs of parametrers to
+                        be appended to the URL must be JSON encodable</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+
+
+<h5>Returns:</h5>
+<a href="Promise.html"><code>Promise</code></a> object. If the promise resolves a
+<a href="CouchResult.html"><code>CouchResult</code></a> is returned, if it rejects a <a href="CouchError.html"><code>CouchError</code></a> is
+returned.
+<br />
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="put">
+            
+            put<span class="signature">(path, body, parms)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="Promise.html">Promise</a>}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="database.js.html">database.js</a>, <a href="database.js.html#line95">line 95</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Convenience method to send a PUT request to a CouchDB database.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>path</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>the path to the desired object below the database-URL</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>body</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>Object or Array to be JSON encoded and put into
+                       the request body</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>parms</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>Object containing key/vale pairs of parametrers to
+                        be appended to the URL must be JSON encodable</p></td>
         </tr>
 	
 	
@@ -548,7 +1313,7 @@ returned.
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha13</a> on Mon Jan 12 2015 18:12:07 GMT+0100 (CET)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha13</a> on Mon Jan 12 2015 22:44:37 GMT+0100 (CET)
         </footer>
     </div>
 </div>
