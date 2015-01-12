@@ -7,6 +7,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-blanket');
   grunt.loadNpmTasks('grunt-eslint');
   grunt.loadNpmTasks('grunt-jsdoc');
+  grunt.loadNpmTasks('grunt-gh-pages');
 
   grunt.initConfig({
     eslint: {
@@ -67,8 +68,8 @@ module.exports = function(grunt) {
         src: './coverage.lcov',
       }
     },
-    jsdoc : {
-      dist : {
+    jsdoc: {
+      dist: {
         src: ['index.js', 'lib/*.js', 'README.md'],
         options: {
           destination: 'doc',
@@ -76,10 +77,17 @@ module.exports = function(grunt) {
           configure : "jsdoc.conf.json"
         }
       }
+    },
+    'gh-pages': {
+      options: {
+        base: 'doc',
+      },
+      src: ['**']
     }
   });
 
   grunt.registerTask('test', ['eslint', 'clean', 'blanket', 'copy', 'mochaTest']);
   grunt.registerTask('npm', ['test', 'coveralls']);
   grunt.registerTask('default', ['test', 'jsdoc']);
+  grunt.registerTask('gh-doc', ['default', 'gh-pages']);
 };
