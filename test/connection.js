@@ -30,6 +30,11 @@ MockConnection.prototype.add_header = function (key, value) {
   return this;
 };
 
+MockConnection.prototype.add_url_params = function (parms) {
+  this.expectedRequest.qs = parms;
+  return this;
+};
+
 MockConnection.prototype.add_request_body = function (data) {
   if (data) {
     this.expectedRequest.body = JSON.stringify(data);
@@ -73,12 +78,43 @@ describe('Connection', function () {
 
 
   describe('#make_request()', function () {
-    //var METH = 'POST';
-    //var URL = 'http://loclhost:5984';
+    var HEADER_KEY = 'X-Header-Test';
+    var HEADER_VAL = 'Test-1-2-3';
+
+    var URL_PARMS = { 'bar': 'baz', 'bang': 'boom' };
+
+    var RESPONSE_BODY = { 'Response': 'Foo Bar FooBarrr' };
+    var REQUEST_BODY = { 'Request': 'Lorem Ipsum dolor sit amet' };
+
+    var HEADERS = {};
+    HEADERS[HEADER_KEY] = HEADER_VAL;
+
+    var OPTS = {
+      headers: HEADERS,
+      parms: URL_PARMS,
+      body: REQUEST_BODY
+    };
 
     it('should correctly call "request" and handle a correct response', function (done) {
-      // Fake an arbitrary answer, created to check as much functionality as possible
-      done();
+      var mock = new MockConnection(request, 'POST', 'http://localhost:5984/test_request');
+      mock.add_header(HEADER_KEY, HEADER_VAL);
+      mock.add_url_params(URL_PARMS);
+      mock.add_request_body(REQUEST_BODY);
+      mock.result(200, RESPONSE_BODY);
+
+      conn.make_request('POST', 'test_request',  OPTS).then(function (result) {
+        expect(result).to.exist;
+        expect(result.response.statusCode).to.equal(200);
+
+        var data = result.data;
+        expect(data).to.exist;
+        expect(data).to.deep.equal(RESPONSE_BODY);
+
+        request.verify();
+
+        done();
+      }).done();
+
     });
   });
 

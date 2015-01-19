@@ -26,8 +26,6 @@ describe('Database', function () {
   var mock = sinon.mock(conn);
   var db = new Database(TEST_DB_NAME, conn);
 
-  // TODO: We need to check wether the url is contructed correctly
-  // TODO: We need to check if the data is correctly passed back
 
   // Renew the connection with the request stub for each sub-test
   beforeEach(function () {
@@ -52,6 +50,7 @@ describe('Database', function () {
         })
     );
   }
+
 
   describe('#make_request()', function () {
     it('should correctly pass through data from the connection', function (done) {
@@ -79,16 +78,24 @@ describe('Database', function () {
     });
   });
 
+
   describe('#get()', function () {
+
   });
+
 
   describe('#post()', function () {
+
   });
+
 
   describe('#put()', function () {
+
   });
 
+
   describe('#delete()', function () {
+
   });
 
 });
