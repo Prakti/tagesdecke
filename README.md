@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/Prakti/tagesdecke.svg?branch=master)](https://travis-ci.org/Prakti/tagesdecke)
 [![Coverage Status](https://img.shields.io/coveralls/Prakti/tagesdecke.svg)](https://coveralls.io/r/Prakti/tagesdecke?branch=master)
+[![Code Climate](https://codeclimate.com/github/Prakti/tagesdecke/badges/gpa.svg)](https://codeclimate.com/github/Prakti/tagesdecke)
 [![Dependency Status](https://david-dm.org/prakti/tagesdecke.svg)](https://david-dm.org/prakti/tagesdecke)
 [![devDependency Status](https://david-dm.org/prakti/tagesdecke/dev-status.svg)](https://david-dm.org/prakti/tagesdecke#info=devDependencies)
 
