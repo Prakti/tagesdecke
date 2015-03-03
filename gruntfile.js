@@ -18,13 +18,13 @@ module.exports = function(grunt) {
     },
     clean: {
       coverage: {
-        src: ['coverage/']
+        src: ['coverage/', 'coverage.html', 'coverage.lcov']
       }
     },
     copy: {
       coverage: {
-        src: ['test'],
-        dest: 'coverage/test'
+        src: ['test/**'],
+        dest: 'coverage/'
       }
     },
     blanket: {
