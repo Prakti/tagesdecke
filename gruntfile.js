@@ -23,8 +23,8 @@ module.exports = function(grunt) {
     },
     copy: {
       coverage: {
-        src: ['test/**'],
-        dest: 'coverage/'
+        src: ['test'],
+        dest: 'coverage/test'
       }
     },
     blanket: {

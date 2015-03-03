@@ -102,7 +102,7 @@ describe('Connection', function () {
       mock.add_request_body(REQUEST_BODY);
       mock.result(200, RESPONSE_BODY);
 
-      conn.make_request('POST', 'test_request',  OPTS).then(function (result) {
+      conn.make_request('POST', 'test_request', OPTS).then(function (result) {
         expect(result).to.exist;
         expect(result.response.statusCode).to.equal(200);
 
