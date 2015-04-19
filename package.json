@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "blanket": "^1.1.6",
+    "bluebird": "^2.9.24",
     "chai": "^2.1.0",
     "chai-as-promised": "^4.2.0",
     "grunt": "^0.4.5",

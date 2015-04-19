@@ -3,6 +3,18 @@
 /* eslint no-unused-expressions: 0 */
 'use strict';
 
+
+/*global Promise:true*/
+/**
+ * Promise class as provided by the bluedbird library. If a Promise is
+ * resolved it will yield a {@link CouchResult} if it is rejected it yields a
+ * {@link CouchError}.
+ *
+ * @class Promise
+ * @see {@link https://github.com/petkaantonov/bluebird.git|bluebird}
+ */
+var Promise = require('bluebird');
+
 var chai = require('chai');
 chai.use(require('chai-as-promised'));
 var expect = chai.expect;
