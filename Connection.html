@@ -68,7 +68,11 @@
             
                 <li data-name="Connection#get"><a href="Connection.html#get">get</a></li>
             
+                <li data-name="Connection#head"><a href="Connection.html#head">head</a></li>
+            
                 <li data-name="Connection#make_request"><a href="Connection.html#make_request">make_request</a></li>
+            
+                <li data-name="Connection#openDB"><a href="Connection.html#openDB">openDB</a></li>
             
                 <li data-name="Connection#post"><a href="Connection.html#post">post</a></li>
             
@@ -157,13 +161,15 @@
             
             <span class="subtitle">Methods</span>
             
+                <li data-name="Database#copy"><a href="Database.html#copy">copy</a></li>
+            
                 <li data-name="Database#delete"><a href="Database.html#delete">delete</a></li>
             
                 <li data-name="Database#get"><a href="Database.html#get">get</a></li>
             
-                <li data-name="Database#make_request"><a href="Database.html#make_request">make_request</a></li>
+                <li data-name="Database#head"><a href="Database.html#head">head</a></li>
             
-                <li data-name="Database#post"><a href="Database.html#post">post</a></li>
+                <li data-name="Database#make_request"><a href="Database.html#make_request">make_request</a></li>
             
                 <li data-name="Database#put"><a href="Database.html#put">put</a></li>
             
@@ -228,7 +234,7 @@ mechanisms for creating the proper HTTP requests.</p></div>
     
         
         <div class="tag-source">
-            <a href="connection.js.html">connection.js</a>, <a href="connection.js.html#line33">line 33</a>
+            <a href="connection.js.html">connection.js</a>, <a href="connection.js.html#line34">line 34</a>
         </div>
         
     </div>
@@ -486,7 +492,7 @@ mechanisms for creating the proper HTTP requests.</p></div>
     
         
         <div class="tag-source">
-            <a href="connection.js.html">connection.js</a>, <a href="connection.js.html#line173">line 173</a>
+            <a href="connection.js.html">connection.js</a>, <a href="connection.js.html#line174">line 174</a>
         </div>
         
     </div>
@@ -637,7 +643,7 @@ returned.
     
         
         <div class="tag-source">
-            <a href="connection.js.html">connection.js</a>, <a href="connection.js.html#line124">line 124</a>
+            <a href="connection.js.html">connection.js</a>, <a href="connection.js.html#line125">line 125</a>
         </div>
         
     </div>
@@ -781,6 +787,78 @@ returned.
             
 <dt>
     <div class="nameContainer">
+        <h4 class="name" id="head">
+            
+            head<span class="signature">()</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="connection.js.html">connection.js</a>, <a href="connection.js.html#line183">line 183</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Convenience method to send a HEAD request to a CouchDB  host.</p>
+<p>TODO: Document</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
         <h4 class="name" id="make_request">
             
             make_request<span class="signature">(method, path, opts)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="Promise.html">Promise</a>}</span>
@@ -788,7 +866,7 @@ returned.
     
         
         <div class="tag-source">
-            <a href="connection.js.html">connection.js</a>, <a href="connection.js.html#line67">line 67</a>
+            <a href="connection.js.html">connection.js</a>, <a href="connection.js.html#line68">line 68</a>
         </div>
         
     </div>
@@ -1048,6 +1126,78 @@ returned.
             
 <dt>
     <div class="nameContainer">
+        <h4 class="name" id="openDB">
+            
+            openDB<span class="signature">()</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="connection.js.html">connection.js</a>, <a href="connection.js.html#line193">line 193</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Convenience method to open a database on a CouchDB host.</p>
+<p>TODO: Document</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
         <h4 class="name" id="post">
             
             post<span class="signature">(path, body, parms)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="Promise.html">Promise</a>}</span>
@@ -1055,7 +1205,7 @@ returned.
     
         
         <div class="tag-source">
-            <a href="connection.js.html">connection.js</a>, <a href="connection.js.html#line141">line 141</a>
+            <a href="connection.js.html">connection.js</a>, <a href="connection.js.html#line142">line 142</a>
         </div>
         
     </div>
@@ -1230,7 +1380,7 @@ returned.
     
         
         <div class="tag-source">
-            <a href="connection.js.html">connection.js</a>, <a href="connection.js.html#line158">line 158</a>
+            <a href="connection.js.html">connection.js</a>, <a href="connection.js.html#line159">line 159</a>
         </div>
         
     </div>
@@ -1411,7 +1561,7 @@ returned.
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta1</a> on Tue Mar 03 2015 21:51:19 GMT+0100 (CET)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta1</a> on Sun Apr 19 2015 12:04:15 GMT+0200 (CEST)
         </footer>
     </div>
 </div>
