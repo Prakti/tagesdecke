@@ -8,8 +8,6 @@ chai.use(require('chai-as-promised'));
 var expect = chai.expect;
 
 var sinon = require('sinon');
-/*global Promise:true*/
-var Promise = require('bluebird');
 
 var Database = require('../lib/database');
 var util = require('../lib/util');
@@ -74,28 +72,98 @@ describe('Database', function () {
       }).catch(function (err) {
         console.log('Error: ', err);
         throw err;
-      }).done();
+      });
     });
   });
 
 
-  describe('#get()', function () {
+  describe('#get(documentID)', function () {
+    it('should correctly return the requested document.', function(done) {
+      var SUBPATH = 'SpaghettiWithMeatballs';
+      var FULLPATH = TEST_DB_NAME + '/' + SUBPATH;
+      var PARMS = { attachments: true, rev: '2' };
+      var OPTS = { parms: PARMS };
+      var BODY = {
+        '_id': 'SpaghettiWithMeatballs',
+        '_rev': '1-917fa2381192822767f010b95b45325b',
+        'description': 'An Italian-American dish.',
+        'ingredients': [
+          'spaghetti',
+          'tomato sauce',
+          'meatballs'
+        ],
+        'name': 'Spaghetti with meatballs'
+      };
+      var STATUS = 200;
 
+      setupMock('make_request', 'GET', FULLPATH, OPTS, null, STATUS, BODY);
+
+      db.get('SpaghettiWithMeatballs', PARMS).then(function (result) {
+        mock.verify();
+        expect(result).to.exist;
+        expect(result.data).to.exist;
+        expect(result.data._id).to.exist;
+        expect(result.data._id).to.equal('SpaghettiWithMeatballs');
+        expect(result.data).to.deep.equal(BODY);
+        done();
+      }).catch(function (err) {
+        console.log('Error: ', err);
+        throw err;
+      });
+    });
   });
 
 
-  describe('#post()', function () {
+  describe('#put(documentID, document)', function () {
+    it('should correctly store the given document.', function(done) {
+      var SUBPATH = 'SpaghettiWithMeatballs';
+      var FULLPATH = TEST_DB_NAME + '/' + SUBPATH;
+      var REQ_BODY = {
+        '_id': 'SpaghettiWithMeatballs',
+        'description': 'An Italian-American dish.',
+        'ingredients': [
+          'spaghetti',
+          'tomato sauce',
+          'meatballs'
+        ],
+        'name': 'Spaghetti with meatballs'
+      };
+      var OPTS = { body: REQ_BODY, parms: undefined };
+      var RESP_BODY = {
+        'id': 'SpaghettiWithMeatballs',
+        'ok': true,
+        'rev': '1-917fa2381192822767f010b95b45325b'
+      };
+      var STATUS = 201;
 
-  });
+      setupMock('make_request', 'PUT', FULLPATH, OPTS, null, STATUS, RESP_BODY);
 
-
-  describe('#put()', function () {
-
+      db.put('SpaghettiWithMeatballs', REQ_BODY).then(function (result) {
+        mock.verify();
+        expect(result).to.exist;
+        expect(result.data).to.exist;
+        expect(result.data.id).to.exist;
+        expect(result.data.id).to.equal('SpaghettiWithMeatballs');
+        expect(result.data).to.deep.equal(RESP_BODY);
+        done();
+      }).catch(function (err) {
+        console.log('Error: ', err);
+        throw err;
+      });
+    });
   });
 
 
   describe('#delete()', function () {
+    it('should correctly delete a given document from the DB.', function(done) {
+      done();
+    });
+  });
 
+  describe('#copy()', function () {
+    it('should correctly copy a given document to another ID.', function (done) {
+      done();
+    });
   });
 
 });

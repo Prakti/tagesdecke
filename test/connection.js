@@ -95,6 +95,8 @@ describe('Connection', function () {
       body: REQUEST_BODY
     };
 
+    var ERROR = new Error('Test IO Error');
+
     it('should correctly call "request" and handle a correct response', function (done) {
       var mock = new MockConnection(request, 'POST', 'http://localhost:5984/test_request');
       mock.add_header(HEADER_KEY, HEADER_VAL);
@@ -111,10 +113,24 @@ describe('Connection', function () {
         expect(data).to.deep.equal(RESPONSE_BODY);
 
         request.verify();
-
         done();
-      }).done();
+      });
+    });
 
+    it('should correctly call "request" and gracefully handle an I/O error', function(done) {
+      var mock = new MockConnection(request, 'POST', 'http://localhost:5984/test_request');
+      mock.add_header(HEADER_KEY, HEADER_VAL);
+      mock.add_url_params(URL_PARMS);
+      mock.add_request_body(REQUEST_BODY);
+      mock.io_error(ERROR);
+
+      conn.make_request('POST', 'test_request', OPTS).catch(function (error) {
+        expect(error).to.exist;
+        expect(error).to.equal(ERROR);
+
+        request.verify();
+        done();
+      });
     });
   });
 
@@ -137,7 +153,7 @@ describe('Connection', function () {
         done();
       }).catch(function (err) {
         console.log(err);
-      }).done();
+      });
 
     });
   });
@@ -154,7 +170,7 @@ describe('Connection', function () {
 
         request.verify();
         done();
-      }).done();
+      });
     });
   });
 
@@ -174,7 +190,7 @@ describe('Connection', function () {
         done();
       }).catch(function (err) {
         console.log(err);
-      }).done();
+      });
     });
   });
 
@@ -194,7 +210,7 @@ describe('Connection', function () {
         done();
       }).catch(function (err) {
         console.log(err);
-      }).done();
+      });
     });
   });
 
@@ -216,7 +232,7 @@ describe('Connection', function () {
           done();
         }).catch(function (err) {
           console.log(err);
-        }).done();
+        });
     });
   });
 
@@ -235,8 +251,81 @@ describe('Connection', function () {
         done();
       }).catch(function (err) {
         console.log(err);
-      }).done();
+      });
     });
+  });
+
+  describe('#head("http://localhost:5984/' + TEST_DB_NAME + '")', function () {
+    it('should successfully detect the existence of a database', function (done) {
+      var mock = new MockConnection(request, 'HEAD', 'http://localhost:5984/' + TEST_DB_NAME);
+      mock.result(200, null);
+
+      conn.head(TEST_DB_NAME).then(function (result) {
+        expect(result).to.exist;
+        expect(result.response.statusCode).to.equal(200);
+        done();
+      }).catch(function (err) {
+        console.log(err);
+      });
+    });
+  });
+
+  describe('#openDB("' + TEST_DB_NAME + '")', function () {
+    it('should successfully open an existing database on the CouchDB host', function(done) {
+      request = sinon.stub();
+      conn = new Connection('http://localhost:5984/', request);
+
+      request.onCall(0)
+             .yields(null, { statusCode: 200 }, null);
+
+      conn.openDB(TEST_DB_NAME).then(function (database) {
+        expect(database).to.exist;
+        expect(database.name).to.exist;
+        expect(database.name).to.equal(TEST_DB_NAME);
+        expect(database.conn).to.exist;
+        expect(database.conn).to.equal(conn);
+        done();
+      });
+    });
+
+    it('should successfully open a nonexisting database on the CouchDB host', function (done) {
+      request = sinon.stub();
+      conn = new Connection('http://localhost:5984/', request);
+
+      request.onCall(0)
+             .yields(null, { statusCode: 404 }, null);
+
+      request.onCall(1)
+             .yields(null, { statusCode: 201 }, { 'ok': true });
+
+      conn.openDB(TEST_DB_NAME).then(function (database) {
+        expect(database).to.exist;
+        expect(database.name).to.exist;
+        expect(database.name).to.equal(TEST_DB_NAME);
+        expect(database.conn).to.exist;
+        expect(database.conn).to.equal(conn);
+        done();
+      }).catch(function (err) {
+        console.log(err);
+        done();
+      });
+    });
+
+
+    it('should gracefully fail on a nonex. db with "create=false"', function (done) {
+      request = sinon.stub();
+      conn = new Connection('http://localhost:5984/', request);
+
+      request.onCall(0)
+             .yields(null, { statusCode: 404 }, null);
+
+      conn.openDB(TEST_DB_NAME, { create: false }).catch(function (error) {
+        expect(error).to.exist;
+        expect(error.statusCode).equals(404);
+        done();
+      });
+    });
+
   });
 
 });
