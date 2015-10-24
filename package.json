@@ -1,6 +1,6 @@
 {
   "name": "tagesdecke",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "A thin access library for CouchDB",
   "main": "index.js",
   "scripts": {
