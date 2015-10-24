@@ -43,6 +43,35 @@
     </div>
     <ul class="list">
     
+        <li class="item" data-name="AuthError">
+            <span class="title">
+                <a href="AuthError.html">AuthError</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            <span class="subtitle">Members</span>
+            
+                <li data-name="AuthError#body"><a href="AuthError.html#body">body</a></li>
+            
+                <li data-name="AuthError#data"><a href="AuthError.html#data">data</a></li>
+            
+                <li data-name="AuthError#response"><a href="AuthError.html#response">response</a></li>
+            
+                <li data-name="AuthError#statusCode"><a href="AuthError.html#statusCode">statusCode</a></li>
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
         <li class="item" data-name="Connection">
             <span class="title">
                 <a href="Connection.html">Connection</a>
@@ -52,9 +81,17 @@
             
             <span class="subtitle">Members</span>
             
+                <li data-name="Connection#passwd"><a href="Connection.html#passwd">passwd</a></li>
+            
+                <li data-name="Connection#req_defaults"><a href="Connection.html#req_defaults">req_defaults</a></li>
+            
                 <li data-name="Connection#request"><a href="Connection.html#request">request</a></li>
             
                 <li data-name="Connection#url"><a href="Connection.html#url">url</a></li>
+            
+                <li data-name="Connection#useCookie"><a href="Connection.html#useCookie">useCookie</a></li>
+            
+                <li data-name="Connection#user"><a href="Connection.html#user">user</a></li>
             
             </ul>
             <ul class="typedefs itemMembers">
@@ -69,6 +106,10 @@
                 <li data-name="Connection#get"><a href="Connection.html#get">get</a></li>
             
                 <li data-name="Connection#head"><a href="Connection.html#head">head</a></li>
+            
+                <li data-name="Connection#http_request"><a href="Connection.html#http_request">http_request</a></li>
+            
+                <li data-name="Connection#login_and_retry"><a href="Connection.html#login_and_retry">login_and_retry</a></li>
             
                 <li data-name="Connection#make_request"><a href="Connection.html#make_request">make_request</a></li>
             
@@ -229,6 +270,27 @@ var util = require('./util');
 
 var CouchResult = util.CouchResult;
 var CouchError = util.CouchError;
+var AuthError = util.AuthError;
+
+/**
+ * Extracts non-null options from a given object and attach them to the other
+ * given object.
+ *
+ * @param opts_list {Array} an array of strings representing the option names
+ * @param src {Object} the object to check for set options
+ * @param dst {Object} the object to set found options on
+ *
+ * TODO: MA -- 2014/10/24 -- Think about migrating to own module
+ */
+function getOptions(opts_list, src, dst) {
+  if (src) {
+    _.forEach(opts_list, function (opt) {
+      if (src[opt]) {
+        dst[opt] = src[opt];
+      }
+    });
+  }
+}
 
 /**
  * Creates a Connection to a CouchDB Instance.
@@ -241,7 +303,7 @@ var CouchError = util.CouchError;
  * @param {String} url - The base URL to the CouchDB Instance
  * @param {Object} request - An object supporting the 'request' interface
  */
-function Connection(url, request) {
+function Connection(url, request, options) {
 
   /**
    * The url to the CouchDB instance
@@ -250,16 +312,147 @@ function Connection(url, request) {
   this.url = url;
 
   /**
+   * TODO: MA -- 2014/10/24 -- Document
+   *
+   * @member {Object}
+   */
+  this.req_defaults = {
+    headers: { 'Accept': 'application/json' },
+    json: true
+  };
+
+  /**
+   * Indicates whether to use Cookie authentication
+   * @member {boolean}
+   */
+  this.useCookie = false;
+
+  /**
+   * The username to use for connecting to the couchdb host
+   * @member {String}
+   */
+  this.user = '';
+
+  /**
+   * Ths password to use for connecting to the CouchDB host
+   * @member {String}
+   */
+  this.passwd = '';
+
+  // Variable initialization done --> connection setup
+
+  getOptions(['user', 'passwd', 'useCookie'], options, this);
+
+  if (!this.useCookie &amp;&amp; this.user) {
+    // We do not use cookie auth -- configure basic auth
+    this.req_defaults.auth = {
+      user: this.user,
+      pass: this.passwd,
+      sendImmediately: true
+    };
+  }
+
+  /**
    * An Object fulfilling the request API
    * @member {Object}
    * @see {@link https://github.com/request/request|request}
    */
-  this.request = request;
+  this.request = request.defaults(this.req_defaults);
 }
 
 
 /**
- * The central workhorse for performing the HTTP requests.
+ * The bare-metal HTTP request handling function returning a promise.
+ *
+ * WARNING: it is recommended to use make_request as it can handle
+ *          automatic cookie-based login/relogin.
+ *
+ * @param {String} method - The HTTP verb to be used in the request
+ * @param {String} path - The relative path for the request
+ * @param {Object} opts - An Object containing optional parameters for the request:
+ * @param {Object} opts.headers - Object containing key/value pairs of custom
+ *                                HTTP Headers
+ * @param {Object} opts.parms - Object containing key/value pairs of parameters to
+ *                              be appended to the URL must be JSON encodable
+ * @param {Object} opts.body - Object or Array to be JSON encoded and put into
+ *                             the request body
+ *
+ * @returns {Promise} A {@link Promise} object. If the promise resolves a
+ * {@link CouchResult} is returned, if it rejects a {@link CouchError} is
+ * returned.
+ */
+Connection.prototype.http_request = function http_request(method, path, opts) {
+  var self = this;
+
+  var req = {
+    method: method,
+    url: urljoin(this.url, path)
+  };
+
+  if (opts) {
+    if (opts.headers) {
+      req.headers = opts.headers;
+    }
+
+    if (opts.parms) {
+      req.qs = opts.parms;
+    }
+
+    if (opts.body) {
+      req.body = opts.body;
+    }
+  }
+
+  return new Promise(function do_request(resolve, reject) {
+    self.request(req, function handle_response (err, resp, body) {
+      if (err) {
+        return reject(err);
+      }
+
+      if (resp.statusCode &lt; 400) {
+        resolve(new CouchResult(resp, body));
+      } else if (resp.statusCode === 401) {
+        // Special case for handling relogins with cooike auth
+        reject(new AuthError(resp, body));
+      } else {
+        reject(new CouchError(resp, body));
+      }
+    });
+  });
+
+};
+
+
+/**
+ * Do a cookie-based login to the CouchDB and then retry a given request.
+ *
+ * @returns {Promise} Returns a promise that either resolves successful to the
+ *                    result of the specified request or is rejected because
+ *                    of the failed authentication.
+ */
+Connection.prototype.login_and_retry = function login_and_retry (method, path, opts) {
+  var self = this;
+
+  var login = {
+    name: this.user,
+    password: this.passwd
+  };
+
+  return this.http_request('POST', '_session', { body: login })
+  .then(function (result) {
+      // Set cookie for future requests
+      var headers = result.response.headers;
+      self.request.cookie(headers['Set-Cookie']);
+
+      // Retry the request (now with cookie)
+      return self.http_request(method, path, opts);
+  });
+};
+
+/**
+ * The central workhorse for HTTP requests. Does automatic login and relogin
+ * in casse 'useCookie' is set on the connection and credentials have been
+ * supplied.
  *
  * @param {String} method - The HTTP verb to be used in the request
  * @param {String} path - The relative path for the request
@@ -276,49 +469,15 @@ function Connection(url, request) {
  * returned.
  */
 Connection.prototype.make_request = function make_request(method, path, opts) {
-
   var self = this;
-
-  var headers = {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-  };
-
-  var req = {
-    method: method,
-    url: urljoin(this.url, path)
-  };
-
-  if (opts) {
-    if (opts.headers) {
-      _.assign(headers, opts.headers);
-    }
-
-    if (opts.parms) {
-      req.qs = opts.parms;
-    }
-
-    if (opts.body) {
-      req.body = JSON.stringify(opts.body);
-    }
-  }
-
-  req.headers = headers;
-
-  return new Promise(function do_request(resolve, reject) {
-    self.request(req, function handle_response (err, resp, body) {
-      if (err) {
-        return reject(err);
-      }
-
-      if (resp.statusCode &lt; 400) {
-        resolve(new CouchResult(resp, body));
-      } else {
-        reject(new CouchError(resp, body));
-      }
+  if (this.useCookie) {
+    // Try to make the request but intercept auth failues
+    return this.http_request(method, path, opts).catch(AuthError, function () {
+        return self.login_and_retry(method, path, opts);
     });
-  });
-
+  } else {
+    return this.http_request(method, path, opts);
+  }
 };
 
 /**
@@ -412,7 +571,7 @@ Connection.prototype.openDB = function openDB(dbname, options) {
     return new Database(dbname, self);
   }).catch(function (error) {
     if (error.statusCode === 404 &amp;&amp; create) {
-      return self.put('dbname').then(function () {
+      return self.put(dbname).then(function () {
         return new Database(dbname, self);
       });
     } else {
@@ -434,7 +593,7 @@ module.exports = Connection;
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta1</a> on Sun Apr 19 2015 12:00:18 GMT+0200 (CEST)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta1</a> on Sat Oct 24 2015 18:31:35 GMT+0200 (CEST)
         </footer>
     </div>
 </div>

@@ -11,21 +11,33 @@ var sinon = require('sinon');
 
 var Connection = require('../lib/connection');
 
+function mockRequest() {
+  var request = sinon.mock();
+  request.defaults = sinon.stub().returns(request);
+  return request;
+}
+
+function stubRequest() {
+  var request = sinon.stub();
+  request.defaults = sinon.stub().returns(request);
+  request.cookie = sinon.spy();
+  return request;
+}
 
 function MockConnection(req, method, url) {
   this.expectedRequest = {
     method: method,
-    url: url,
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    }
+    url: url
   };
 
   this.req = req;
 }
 
 MockConnection.prototype.add_header = function (key, value) {
+  if (!this.expectedRequest.headers) {
+    this.expectedRequest.headers = {};
+  }
+
   this.expectedRequest.headers[key] = value;
   return this;
 };
@@ -37,7 +49,7 @@ MockConnection.prototype.add_url_params = function (parms) {
 
 MockConnection.prototype.add_request_body = function (data) {
   if (data) {
-    this.expectedRequest.body = JSON.stringify(data);
+    this.expectedRequest.body = data;
   }
   return this;
 };
@@ -67,17 +79,17 @@ describe('Connection', function () {
 
   var TEST_DB_NAME = 'tagesdecke-test-db';
 
-  var request = sinon.mock();
+  var request = mockRequest();
   var conn = new Connection('http://localhost:5984/', request);
 
   // Renew the connection with the request stub for each sub-test
   beforeEach(function () {
-    request = sinon.mock();
+    request = mockRequest();
     conn = new Connection('http://localhost:5984/', request);
   });
 
 
-  describe('#make_request()', function () {
+  describe('#http_request()', function () {
     var HEADER_KEY = 'X-Header-Test';
     var HEADER_VAL = 'Test-1-2-3';
 
@@ -104,7 +116,7 @@ describe('Connection', function () {
       mock.add_request_body(REQUEST_BODY);
       mock.result(200, RESPONSE_BODY);
 
-      conn.make_request('POST', 'test_request', OPTS).then(function (result) {
+      conn.http_request('POST', 'test_request', OPTS).then(function (result) {
         expect(result).to.exist;
         expect(result.response.statusCode).to.equal(200);
 
@@ -124,11 +136,62 @@ describe('Connection', function () {
       mock.add_request_body(REQUEST_BODY);
       mock.io_error(ERROR);
 
-      conn.make_request('POST', 'test_request', OPTS).catch(function (error) {
+      conn.http_request('POST', 'test_request', OPTS).catch(function (error) {
         expect(error).to.exist;
         expect(error).to.equal(ERROR);
 
         request.verify();
+        done();
+      });
+    });
+  });
+
+  describe('#make_request()', function () {
+    var COOKIE = 'Thisisacookie!!!11einself';
+    var AUTH_HEADERS = { 'Set-Cookie': COOKIE };
+    var REQUEST_BODY = { 'data': 'datadatadatadata' };
+
+    it('should gracefully handle authentication failures and retry after login', function (done) {
+      request = stubRequest();
+
+      var options = {
+        user: 'user',
+        passwd: 'passwd',
+        useCookie: true
+      };
+
+      conn = new Connection('http://localhost:5984/', request, options);
+
+      request.onCall(0)
+             .yields(null, { statusCode: 401 }, null);
+
+      request.onCall(1)
+             .yields(null, { statusCode: 200, headers: AUTH_HEADERS },
+                           JSON.stringify({ 'ok': true }));
+      request.onCall(2)
+             .yields(null, { statusCode: 201 }, JSON.stringify(REQUEST_BODY));
+
+      conn.get('/').then(function (result) {
+        expect(result).to.exist;
+        expect(result.response.statusCode).to.equal(201);
+
+        var data = result.data;
+        expect(data).to.exist;
+        expect(data.data).to.equal(REQUEST_BODY.data);
+
+        request.cookie.calledWith(COOKIE);
+
+        request.calledWith({
+          method: 'POST',
+          url: 'http://localhost:5984/_session',
+          body: {
+            name: 'user',
+            password: 'passwd'
+          }
+        });
+
+        expect(request.calledThrice).to.be.true;
+
         done();
       });
     });
@@ -272,7 +335,7 @@ describe('Connection', function () {
 
   describe('#openDB("' + TEST_DB_NAME + '")', function () {
     it('should successfully open an existing database on the CouchDB host', function(done) {
-      request = sinon.stub();
+      request = mockRequest();
       conn = new Connection('http://localhost:5984/', request);
 
       request.onCall(0)
@@ -289,14 +352,14 @@ describe('Connection', function () {
     });
 
     it('should successfully open a nonexisting database on the CouchDB host', function (done) {
-      request = sinon.stub();
+      request = stubRequest();
       conn = new Connection('http://localhost:5984/', request);
 
       request.onCall(0)
              .yields(null, { statusCode: 404 }, null);
 
       request.onCall(1)
-             .yields(null, { statusCode: 201 }, { 'ok': true });
+             .yields(null, { statusCode: 201 }, JSON.stringify({ 'ok': true }));
 
       conn.openDB(TEST_DB_NAME).then(function (database) {
         expect(database).to.exist;
@@ -313,7 +376,7 @@ describe('Connection', function () {
 
 
     it('should gracefully fail on a nonex. db with "create=false"', function (done) {
-      request = sinon.stub();
+      request = mockRequest();
       conn = new Connection('http://localhost:5984/', request);
 
       request.onCall(0)
