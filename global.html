@@ -43,6 +43,35 @@
     </div>
     <ul class="list">
     
+        <li class="item" data-name="AuthError">
+            <span class="title">
+                <a href="AuthError.html">AuthError</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            <span class="subtitle">Members</span>
+            
+                <li data-name="AuthError#body"><a href="AuthError.html#body">body</a></li>
+            
+                <li data-name="AuthError#data"><a href="AuthError.html#data">data</a></li>
+            
+                <li data-name="AuthError#response"><a href="AuthError.html#response">response</a></li>
+            
+                <li data-name="AuthError#statusCode"><a href="AuthError.html#statusCode">statusCode</a></li>
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
         <li class="item" data-name="Connection">
             <span class="title">
                 <a href="Connection.html">Connection</a>
@@ -52,9 +81,17 @@
             
             <span class="subtitle">Members</span>
             
+                <li data-name="Connection#passwd"><a href="Connection.html#passwd">passwd</a></li>
+            
+                <li data-name="Connection#req_defaults"><a href="Connection.html#req_defaults">req_defaults</a></li>
+            
                 <li data-name="Connection#request"><a href="Connection.html#request">request</a></li>
             
                 <li data-name="Connection#url"><a href="Connection.html#url">url</a></li>
+            
+                <li data-name="Connection#useCookie"><a href="Connection.html#useCookie">useCookie</a></li>
+            
+                <li data-name="Connection#user"><a href="Connection.html#user">user</a></li>
             
             </ul>
             <ul class="typedefs itemMembers">
@@ -69,6 +106,10 @@
                 <li data-name="Connection#get"><a href="Connection.html#get">get</a></li>
             
                 <li data-name="Connection#head"><a href="Connection.html#head">head</a></li>
+            
+                <li data-name="Connection#http_request"><a href="Connection.html#http_request">http_request</a></li>
+            
+                <li data-name="Connection#login_and_retry"><a href="Connection.html#login_and_retry">login_and_retry</a></li>
             
                 <li data-name="Connection#make_request"><a href="Connection.html#make_request">make_request</a></li>
             
@@ -339,6 +380,170 @@ CouchError</p>
     
 </dd>
 
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="getOptions">
+            
+            getOptions<span class="signature">(opts_list, src, dst)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="connection.js.html">connection.js</a>, <a href="connection.js.html#line34">line 34</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Extracts non-null options from a given object and attach them to the other
+given object.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>opts_list</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>an array of strings representing the option names</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>src</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>the object to check for set options</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>dst</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>the object to set found options on</p>
+<p>TODO: MA -- 2014/10/24 -- Think about migrating to own module</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
         </dl>
     
     
@@ -356,7 +561,7 @@ CouchError</p>
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta1</a> on Sun Apr 19 2015 12:04:15 GMT+0200 (CEST)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta1</a> on Sat Oct 24 2015 18:34:31 GMT+0200 (CEST)
         </footer>
     </div>
 </div>

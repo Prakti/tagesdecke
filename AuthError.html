@@ -242,150 +242,387 @@
     </ul>
 </div>
     <div class="main">
-        <h1 class="page-title" data-filename="util.js.html">Source: util.js</h1>
+        <h1 class="page-title" data-filename="AuthError.html">Class: AuthError</h1>
         
 
 
+
+<section>
     
-    <section>
-        <article>
-            <pre class="prettyprint source "><code>/* eslint-env node */
-'use strict';
+<header>
+    <h2>
+    AuthError
+    </h2>
+    
+        <div class="class-description"><p>For easy detection of an AuthError in a Promises catch handler.</p></div>
+    
+</header>  
 
-var util = require('util');
+<article>
+    <div class="container-overview">
+    
+    
+    
+        
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="AuthError">
+            
+            new AuthError<span class="signature">(response, body)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="util.js.html">util.js</a>, <a href="util.js.html#line84">line 84</a>
+        </div>
+        
+    </div>
 
-/**
- * Memozied accessor-function for JSON decoding the body of a CouchResult or
- * CouchError
- *
- * @private
- * @function
- */
-function get_data () {
-  if (this._data === undefined) {
-    this._data = JSON.parse(this.body);
-  }
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Create a new AuthError from a given HTTP response and body.</p>
+<p>TODO: MA -- 2015/10/24 -- Create consistency check for statusCode</p>
+    </div>
+    
 
-  return this._data;
-}
+    
+    
+    
+    
+    
+        
 
-
-/**
- * Create a new CouchError from a given HTTP response and body.
- *
- * @class
- * @augments Error
- * @classdesc
- * Encapsulates a HTTP response from a CouchDB and provides quick access to
- * the decoded response body and the status-code for inspection.
- *
- * @param {Object} response - The complete response object as returned from
- *                            the 'request' library
- * @param {String} body - The raw body of the HTTP response
- */
-function CouchError(response, body) {
-
-  /**
-   * The HTTP Status Code of the HTTP response for fast access and inspection
-   * @member {Int}
-   */
-  this.statusCode = response.statusCode;
-
-  /**
-   * The raw response object as returned from 'request'
-   * @member {Object}
-   * @see {@link https://github.com/request/request|request}
-   */
-  this.response = response;
-
-  /**
-   * The reaw body of the HTTP response
-   * @member {String}
-   */
-  this.body = body;
-
-  /**
-   * The JSON decoded body of the HTTP response
-   * @member {Object|Array}
-   * @name data
-   * @memberof CouchError
-   * @instance
-   */
-  Object.defineProperty(this, 'data', {
-    get: get_data
-  });
-}
-
-util.inherits(CouchError, Error);
-
-/**
- * Create a new AuthError from a given HTTP response and body.
- *
- * TODO: MA -- 2015/10/24 -- Create consistency check for statusCode
- *
- * @class
- * @augments CouchError
- * @classdesc
- * For easy detection of an AuthError in a Promises catch handler.
- *
- * @param {Object} response - The complete response object as returned from
- *                            the 'request' library
- * @param {String} body - The raw body of the HTTP response
- */
-function AuthError(response, body) {
-  CouchError.call(this, response, body);
-}
-
-util.inherits(AuthError, CouchError);
-
-/**
- * Create a new CouchResult from a given HTTP response and body
- *
- * @class
- * @classdesc
- * Encapsulates a HTTP response from a CouchDB and provides quick access to
- * the decoded response body.
- *
- * @param {Object} response - The complete response object as returned from
- *                            the 'request' library
- * @param {String} body - The raw body of the HTTP response
- */
-function CouchResult(response, body) {
-  /**
-   * The raw response object as returned from 'request'
-   * @member {Object}
-   * @see {@link https://github.com/request/request|request}
-   */
-  this.response = response;
-
-  /**
-   * The reaw body of the HTTP response
-   * @member {String}
-   */
-  this.body = body;
-
-  /**
-   * The JSON decoded body of the HTTP response
-   * @member {Object|Array}
-   * @name data
-   * @memberof CouchResult
-   * @instance
-   */
-  Object.defineProperty(this, 'data', {
-    get: get_data
-  });
-}
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>response</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
 
 
-module.exports = {
-  AuthError: AuthError,
-  CouchError: CouchError,
-  CouchResult: CouchResult
-};
-</code></pre>
-        </article>
-    </section>
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>The complete response object as returned from
+                           the 'request' library</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>body</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
 
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>The raw body of the HTTP response</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+    
+    </div>
+    
+    
+        <h3 class="subsection-title">Extends</h3>
+        
+        <ul>
+            <li><a href="CouchError.html">CouchError</a></li>
+        </ul>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        <h3 class="subsection-title">Members</h3>
+        
+        <dl>
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="body">body<span class="type-signature type string">String</span> </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>The reaw body of the HTTP response</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="data">data<span class="type-signature type object">Object</span> <span class="type-signature type array">Array</span> </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>The JSON decoded body of the HTTP response</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="response">response<span class="type-signature type object">Object</span> </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>The raw response object as returned from 'request'</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://github.com/request/request">request</a></li>
+        </ul>
+    </dd>
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="statusCode">statusCode<span class="type-signature type int">Int</span> </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>The HTTP Status Code of the HTTP response for fast access and inspection</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        </dl>
+    
+    
+    
+    
+    
+    
+    
+</article>
+
+</section>  
 
 
 
