@@ -266,17 +266,44 @@
 
 
     <section>
-        <article class="readme"><h1>Tagesdecke - a thin CouchDB access library</h1><p><a href="https://travis-ci.org/Prakti/tagesdecke"><img src="https://travis-ci.org/Prakti/tagesdecke.svg?branch=master" alt="Build Status"></a>
-<a href="https://coveralls.io/r/Prakti/tagesdecke?branch=master"><img src="https://img.shields.io/coveralls/Prakti/tagesdecke.svg" alt="Coverage Status"></a>
-<a href="https://codeclimate.com/github/Prakti/tagesdecke"><img src="https://codeclimate.com/github/Prakti/tagesdecke/badges/gpa.svg" alt="Code Climate"></a>
-<a href="https://david-dm.org/prakti/tagesdecke"><img src="https://david-dm.org/prakti/tagesdecke.svg" alt="Dependency Status"></a>
-<a href="https://david-dm.org/prakti/tagesdecke#info=devDependencies"><img src="https://david-dm.org/prakti/tagesdecke/dev-status.svg" alt="devDependency Status"></a></p>
-<p>This library is meant to be a thin access driver for CouchDB, easing most of
-the low-level HTTP handling via convenience functions.</p>
-<p>The term 'tagesdecke' is the german term for coverlet meant to be lying on a
-couch.</p>
-<p>The library is currently considered alpha stage, major API changes are going
-to occur. You have been warned.</p></article>
+        <article class="readme"><h1>Tagesdecke - a thin CouchDB access library</h1><p><a href="https://travis-ci.org/Prakti/tagesdecke"><img src="https://travis-ci.org/Prakti/tagesdecke.svg?branch=master" alt="Build Status"></a><br><a href="https://coveralls.io/r/Prakti/tagesdecke?branch=master"><img src="https://img.shields.io/coveralls/Prakti/tagesdecke.svg" alt="Coverage Status"></a><br><a href="https://codeclimate.com/github/Prakti/tagesdecke"><img src="https://codeclimate.com/github/Prakti/tagesdecke/badges/gpa.svg" alt="Code Climate"></a><br><a href="https://david-dm.org/prakti/tagesdecke"><img src="https://david-dm.org/prakti/tagesdecke.svg" alt="Dependency Status"></a><br><a href="https://david-dm.org/prakti/tagesdecke#info=devDependencies"><img src="https://david-dm.org/prakti/tagesdecke/dev-status.svg" alt="devDependency Status"></a></p>
+<p>This library is meant to be a thin access driver for CouchDB, easing most of<br>the low-level HTTP handling via convenience functions.</p>
+<p>The term 'tagesdecke' is the german term for coverlet meant to be lying on a<br>couch.</p>
+<p>The library is currently considered beta stage, minor API changes are going<br>to occur. Relax ever so slightly.</p>
+<h2>Example usage in Node.js</h2><p>First import all the dependencies for usage:</p>
+<pre class="prettyprint source lang-javascript"><code>var request = require('request');
+var tagesdecke = require('tagesdecke');
+var Promise = require('bluebird');</code></pre><p>Now configure the connection options. If you do not want to play on CouchDB in<br>Admin-Party mode, provide a user and a passwd. Afterwards we can open the<br>connection.</p>
+<pre class="prettyprint source lang-javascript"><code>var options = {
+  user: 'user',
+  passwd: 'passwd',
+  useCookie: true 
+};
+
+var connection = new Connection('http://localhost:5984', request, options);</code></pre><p>Without Cookies, tagesdecke<br>will use the basic HTTP Auth mode and send the user and password in each<br>request. If you want to use cookies just set the <code>useCookie</code> flag and<br>tagesdecke will try to keep the session alive, even when CouchDB deliberately<br>kills it after a timeout. (See the CouchDB docs)</p>
+<p>Theoretically you could now directly operate on the connection but you would<br>have to specify the database in the url of the requests. Since we want a bit<br>more convenience we will now care for opening a database. Since we want to<br>ensure that the database exists we will make HTTP calls to the CouchDB host<br>which will be represented by promises. Let's write a convenience function for<br>lazily ensuer that the database is always open:</p>
+<pre class="prettyprint source lang-javascript"><code>var dbname = 'dbname';
+var database = null;
+
+// Write a convenience method for cached access to a database.
+function open () {
+  if (database) {
+    return new Promise(function (resolve, reject) {
+      resolve(database);
+    });
+  } else {
+    return connection.openDB(dbname).then(function (_database) {
+      database = _database;
+      return database;
+    });
+  }
+}</code></pre><p>Using that convenience method for opening the database we can now write a<br>function for retrieving a document by ID from the database:</p>
+<pre class="prettyprint source lang-javascript"><code>// Function for simple access to a document.
+function getDocument(id) {
+  return open().get(id).then(function (result) {
+    return result.body;
+  });
+}</code></pre><p>Et voila, now you can write your own abstraction layer on top of these two<br>objects while still accessing all the gory details of the CouchDB HTTP Api if<br>necessary. Enjoy.</p></article>
     </section>
 
 
@@ -287,7 +314,7 @@ to occur. You have been warned.</p></article>
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta1</a> on Mon Feb 15 2016 22:34:37 GMT+0100 (CET)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Feb 15 2016 23:42:40 GMT+0100 (CET)
         </footer>
     </div>
 </div>
