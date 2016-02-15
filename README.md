@@ -15,6 +15,8 @@ couch.
 The library is currently considered beta stage, minor API changes are going
 to occur. Relax ever so slightly.
 
+Documentation can be found [here](http://prakti.github.io/tagesdecke/).
+
 ## Example usage in Node.js
 
 First import all the dependencies for usage:
