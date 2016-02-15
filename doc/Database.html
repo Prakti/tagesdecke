@@ -212,6 +212,8 @@
             
                 <li data-name="Database#make_request"><a href="Database.html#make_request">make_request</a></li>
             
+                <li data-name="Database#post"><a href="Database.html#post">post</a></li>
+            
                 <li data-name="Database#put"><a href="Database.html#put">put</a></li>
             
             </ul>
@@ -254,8 +256,7 @@
     Database
     </h2>
     
-        <div class="class-description"><p>The Database class creates a convenience object for accessing
-database-specific functionality of a CouchDB  Host for a given database.</p></div>
+        <div class="class-description"><p>The Database class creates a convenience object for accessing<br>database-specific functionality of a CouchDB  Host for a given database.</p></div>
     
 </header>  
 
@@ -524,12 +525,12 @@ database-specific functionality of a CouchDB  Host for a given database.</p></di
     <div class="nameContainer">
         <h4 class="name" id="copy">
             
-            copy<span class="signature">()</span>
+            copy<span class="signature">(path, parms)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="Promise.html">Promise</a>}</span>
         </h4>
     
         
         <div class="tag-source">
-            <a href="database.js.html">database.js</a>, <a href="database.js.html#line117">line 117</a>
+            <a href="database.js.html">database.js</a>, <a href="database.js.html#line148">line 148</a>
         </div>
         
     </div>
@@ -541,7 +542,6 @@ database-specific functionality of a CouchDB  Host for a given database.</p></di
     
     <div class="description">
         <p>Convenience method to send a COPY request to a CouchDB database.</p>
-<p>TODO: Document</p>
     </div>
     
 
@@ -549,6 +549,74 @@ database-specific functionality of a CouchDB  Host for a given database.</p></di
     
     
     
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>path</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>the path to the desired object below the database-URL</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>parms</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>Object containing key/vale pairs of parametrers to<br>                        be appended to the URL must be JSON encodable</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
     
     
     
@@ -588,6 +656,15 @@ database-specific functionality of a CouchDB  Host for a given database.</p></di
     
     
     
+
+
+<h5>Returns:</h5>
+<a href="Promise.html"><code>Promise</code></a> object. If the promise resolves a<br><a href="CouchResult.html"><code>CouchResult</code></a> is returned, if it rejects a <a href="CouchError.html"><code>CouchError</code></a> is<br>returned. See the offical CouchDB documentation for what you can expect<br>from a COPY call under different situations.
+<br />
+
+    
+    
+    
 </dd>
 
         
@@ -601,7 +678,7 @@ database-specific functionality of a CouchDB  Host for a given database.</p></di
     
         
         <div class="tag-source">
-            <a href="database.js.html">database.js</a>, <a href="database.js.html#line99">line 99</a>
+            <a href="database.js.html">database.js</a>, <a href="database.js.html#line116">line 116</a>
         </div>
         
     </div>
@@ -682,8 +759,7 @@ database-specific functionality of a CouchDB  Host for a given database.</p></di
             
             <td class="description last">
                 
-                <p>Object containing key/vale pairs of parametrers to
-                        be appended to the URL must be JSON encodable</p></td>
+                <p>Object containing key/vale pairs of parametrers to<br>                        be appended to the URL must be JSON encodable</p></td>
         </tr>
 	
 	
@@ -731,9 +807,7 @@ database-specific functionality of a CouchDB  Host for a given database.</p></di
 
 
 <h5>Returns:</h5>
-<a href="Promise.html"><code>Promise</code></a> object. If the promise resolves a
-<a href="CouchResult.html"><code>CouchResult</code></a> is returned, if it rejects a <a href="CouchError.html"><code>CouchError</code></a> is
-returned.
+<a href="Promise.html"><code>Promise</code></a> object. If the promise resolves a<br><a href="CouchResult.html"><code>CouchResult</code></a> is returned, if it rejects a <a href="CouchError.html"><code>CouchError</code></a> is<br>returned.
 <br />
 
     
@@ -833,8 +907,7 @@ returned.
             
             <td class="description last">
                 
-                <p>Object containing key/vale pairs of parametrers to
-                        be appended to the URL must be JSON encodable</p></td>
+                <p>Object containing key/vale pairs of parametrers to<br>                        be appended to the URL must be JSON encodable</p></td>
         </tr>
 	
 	
@@ -882,9 +955,7 @@ returned.
 
 
 <h5>Returns:</h5>
-<a href="Promise.html"><code>Promise</code></a> object. If the promise resolves a
-<a href="CouchResult.html"><code>CouchResult</code></a> is returned, if it rejects a <a href="CouchError.html"><code>CouchError</code></a> is
-returned.
+<a href="Promise.html"><code>Promise</code></a> object. If the promise resolves a<br><a href="CouchResult.html"><code>CouchResult</code></a> is returned, if it rejects a <a href="CouchError.html"><code>CouchError</code></a> is<br>returned.
 <br />
 
     
@@ -898,12 +969,12 @@ returned.
     <div class="nameContainer">
         <h4 class="name" id="head">
             
-            head<span class="signature">()</span>
+            head<span class="signature">(path, parms)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="Promise.html">Promise</a>}</span>
         </h4>
     
         
         <div class="tag-source">
-            <a href="database.js.html">database.js</a>, <a href="database.js.html#line108">line 108</a>
+            <a href="database.js.html">database.js</a>, <a href="database.js.html#line132">line 132</a>
         </div>
         
     </div>
@@ -915,7 +986,6 @@ returned.
     
     <div class="description">
         <p>Convenience method to send a HEAD request to a CouchDB database.</p>
-<p>TODO: Document</p>
     </div>
     
 
@@ -923,6 +993,74 @@ returned.
     
     
     
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>path</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>the path to the desired object below the database-URL</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>parms</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>Object containing key/vale pairs of parametrers to<br>                        be appended to the URL must be JSON encodable</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
     
     
     
@@ -959,6 +1097,15 @@ returned.
     
     
     
+    
+    
+    
+
+
+<h5>Returns:</h5>
+<a href="Promise.html"><code>Promise</code></a> object. If the promise resolves a<br><a href="CouchResult.html"><code>CouchResult</code></a> is returned, if it rejects a <a href="CouchError.html"><code>CouchError</code></a> is<br>returned. The <a href="CouchResult.html"><code>CouchResult</code></a> will not have a body and but you can<br>inspect the request header within.
+<br />
+
     
     
     
@@ -1118,8 +1265,7 @@ returned.
             
             <td class="description last">
                 
-                <p>Object containing key/value pairs of custom
-                               HTTP Headers</p></td>
+                <p>Object containing key/value pairs of custom<br>                               HTTP Headers</p></td>
         </tr>
 	
 	
@@ -1142,8 +1288,7 @@ returned.
             
             <td class="description last">
                 
-                <p>Object containing key/value pairs of parameters to
-                             be appended to the URL must be JSON encodable</p></td>
+                <p>Object containing key/value pairs of parameters to<br>                             be appended to the URL must be JSON encodable</p></td>
         </tr>
 	
 	
@@ -1166,8 +1311,7 @@ returned.
             
             <td class="description last">
                 
-                <p>Object or Array to be JSON encoded and put into
-                            the request body</p></td>
+                <p>Object or Array to be JSON encoded and put into<br>                            the request body</p></td>
         </tr>
 	
 	
@@ -1221,9 +1365,178 @@ returned.
 
 
 <h5>Returns:</h5>
-<a href="Promise.html"><code>Promise</code></a> object. If the promise resolves a
-<a href="CouchResult.html"><code>CouchResult</code></a> is returned, if it rejects a <a href="CouchError.html"><code>CouchError</code></a> is
-returned.
+<a href="Promise.html"><code>Promise</code></a> object. If the promise resolves a<br><a href="CouchResult.html"><code>CouchResult</code></a> is returned, if it rejects a <a href="CouchError.html"><code>CouchError</code></a> is<br>returned.
+<br />
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="post">
+            
+            post<span class="signature">(path, body, parms)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="Promise.html">Promise</a>}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="database.js.html">database.js</a>, <a href="database.js.html#line101">line 101</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Convenience method to send a POST request to a CouchDB database.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>path</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>the path to the desired object below the database-URL</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>body</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>Object or Array to be JSON encoded and put into<br>                       the request body</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>parms</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>Object containing key/vale pairs of parametrers to<br>                        be appended to the URL must be JSON encodable</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+
+
+<h5>Returns:</h5>
+<a href="Promise.html"><code>Promise</code></a> object. If the promise resolves a<br><a href="CouchResult.html"><code>CouchResult</code></a> is returned, if it rejects a <a href="CouchError.html"><code>CouchError</code></a> is<br>returned.
 <br />
 
     
@@ -1323,8 +1636,7 @@ returned.
             
             <td class="description last">
                 
-                <p>Object or Array to be JSON encoded and put into
-                       the request body</p></td>
+                <p>Object or Array to be JSON encoded and put into<br>                       the request body</p></td>
         </tr>
 	
 	
@@ -1347,8 +1659,7 @@ returned.
             
             <td class="description last">
                 
-                <p>Object containing key/vale pairs of parametrers to
-                        be appended to the URL must be JSON encodable</p></td>
+                <p>Object containing key/vale pairs of parametrers to<br>                        be appended to the URL must be JSON encodable</p></td>
         </tr>
 	
 	
@@ -1396,9 +1707,7 @@ returned.
 
 
 <h5>Returns:</h5>
-<a href="Promise.html"><code>Promise</code></a> object. If the promise resolves a
-<a href="CouchResult.html"><code>CouchResult</code></a> is returned, if it rejects a <a href="CouchError.html"><code>CouchError</code></a> is
-returned.
+<a href="Promise.html"><code>Promise</code></a> object. If the promise resolves a<br><a href="CouchResult.html"><code>CouchResult</code></a> is returned, if it rejects a <a href="CouchError.html"><code>CouchError</code></a> is<br>returned.
 <br />
 
     
@@ -1423,7 +1732,7 @@ returned.
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta1</a> on Sat Oct 24 2015 18:31:36 GMT+0200 (CEST)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Feb 15 2016 23:17:14 GMT+0100 (CET)
         </footer>
     </div>
 </div>
